@@ -1,5 +1,6 @@
 from DataBase import db, ma
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullName = db.Column(db.String(100))
@@ -13,11 +14,14 @@ class User(db.Model):
         self.phone = phone
         self.password = password
 
+
 db.create_all()
+
 
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'fullName', 'CC', 'phone', 'password')
+
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)

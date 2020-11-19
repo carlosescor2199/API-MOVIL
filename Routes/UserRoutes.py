@@ -4,12 +4,12 @@ from DataBase import db
 from Model.User import User, user_schema, users_schema
 import bcrypt
 
+
 @app.route('/signup', methods=["POST"])
 def signUp():
-
     fullname = request.json.get('fullname', None)
     CC = request.json.get('CC', None)
-    phone = float(request.json.get('phone', None))
+    phone = request.json.get('phone', None)
     password = request.json.get('password', None)
     confirm_password = request.json.get('confirm_password', None)
 
@@ -50,9 +50,9 @@ def signUp():
     db.session.commit()
     return user_schema.jsonify(new_user)
 
+
 @app.route('/login', methods=["POST"])
 def Login():
-
     CC = request.json.get('CC', None)
     password = request.json.get('password', None)
 
@@ -80,12 +80,14 @@ def Login():
     db.session.commit()
     return user_schema.jsonify(user)
 
+
 @app.route('/allUser', methods=["GET"])
 def UsersTable():
     all_users = User.query.all()
     result = users_schema.dump(all_users)
 
     return users_schema.jsonify(result)
+
 
 @app.route('/editUser/<id>', methods=["PUT"])
 def editUser(id):
@@ -103,6 +105,7 @@ def editUser(id):
 
     db.session.commit()
     return user_schema.jsonify(editUser)
+
 
 @app.route('/deleteUser/<id>', methods=["DELETE"])
 def deleteUser(id):
